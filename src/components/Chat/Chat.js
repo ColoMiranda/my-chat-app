@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import db from "../../firebase";
 import firebase from "firebase";
 import { selectUser } from "../../features/userSlice";
+import ScrollableFeed from "react-scrollable-feed";
 
 function Chat() {
   const [input, setInput] = useState("");
@@ -21,7 +22,7 @@ function Chat() {
       db.collection("chats")
         .doc(chatId)
         .collection("messages")
-        .orderBy('timestamp', 'asc')
+        .orderBy("timestamp", "asc")
         .onSnapshot((snapshot) =>
           setMessages(
             snapshot.docs.map((doc) => ({
@@ -57,9 +58,11 @@ function Chat() {
         <strong>Details</strong>
       </div>
       <div className="chat__messages">
-        {messages.map(({ id, data }) => (
-          <Message key={id} contents={data} />
-        ))}
+        <ScrollableFeed forceScroll={true}>
+          {messages.map(({ id, data }) => (
+            <Message key={id} contents={data} />
+          ))}
+        </ScrollableFeed>
       </div>
       <div className="chat__input">
         <form>
