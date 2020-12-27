@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { setChat } from "../../features/chatSlice";
 import db from "../../firebase";
 import "./SidebarChat.css";
-import * as timeago from 'timeago.jsfi';
+import * as timeago from 'timeago.js';
 
 function SidebarChar({ id, chatName }) {
   const dispatch = useDispatch();
