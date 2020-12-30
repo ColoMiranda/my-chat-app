@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Chat.css";
 import Send from "@material-ui/icons/Send";
-import { IconButton } from "@material-ui/core";
+import { Button, IconButton } from "@material-ui/core";
 import Message from "../Message/Message";
 import { selectChatName, selectChatId } from "../../features/chatSlice";
 import { useSelector } from "react-redux";
@@ -16,6 +16,9 @@ function Chat() {
   const chatId = useSelector(selectChatId);
   const user = useSelector(selectUser);
   const [messages, setMessages] = useState([]);
+
+  const quickReply1 = "I accept the offer"
+  const quickReply2 = "I reject the offer"
 
   useEffect(() => {
     if (chatId) {
@@ -49,6 +52,19 @@ function Chat() {
     setInput("");
   };
 
+  const sendQuickReply = (quickReply) => {
+    db.collection("chats").doc(chatId).collection("messages").add({
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      message: quickReply,
+      uid: user.uid,
+      photo: user.photo,
+      email: user.email,
+      displayName: user.displayName,
+    });
+
+    setInput("");
+  }
+
   return (
     <div className="chat">
       <div className="chat__header">
@@ -63,6 +79,10 @@ function Chat() {
             <Message key={id} contents={data} />
           ))}
         </ScrollableFeed>
+      </div>
+      <div className="chat__quickReply">
+        <Button onClick={() => sendQuickReply(quickReply1)}>Accept offer</Button>
+        <Button onClick={() => sendQuickReply(quickReply2)}>Decline offer</Button>
       </div>
       <div className="chat__input">
         <form>

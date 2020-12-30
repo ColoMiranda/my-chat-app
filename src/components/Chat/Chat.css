@@ -38,6 +38,25 @@
     scrollbar-width: none;
 }
 
+.chat__quickReply {
+    display: flex;
+    margin-left: auto;
+    margin-right: 24px;
+}
+
+.chat__quickReply > button {
+    padding: 8px 12px;
+    border-radius: 20px;
+    margin: 12px 8px;
+    background-color: #066bdf;
+    color: #eff2f5;
+}
+
+.chat__quickReply > button:hover {
+    background-color: #003c8a;
+    transition: 300ms ease-out;
+}
+
 .chat__input {
     display: flex;
     align-items: center;
